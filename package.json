@@ -1,0 +1,29 @@
+{
+  "name": "duwit",
+  "version": "1.0.0",
+  "description": "A minimalist to-do app that helps you Duwit.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arvincodes/duwit.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/arvincodes/duwit/issues"
+  },
+  "homepage": "https://github.com/arvincodes/duwit#readme",
+  "devDependencies": {
+    "css-loader": "^7.1.2",
+    "html-loader": "^5.1.0",
+    "html-webpack-plugin": "^5.6.3",
+    "style-loader": "^4.0.0",
+    "webpack": "^5.96.1",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^5.1.0"
+  }
+}
