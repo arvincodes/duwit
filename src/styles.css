@@ -74,6 +74,7 @@ nav {
 .hamburger-menu {
   max-height: 28px;
   stroke-width: 1.7;
+  cursor: pointer;
 }
 
 .profile-container {
@@ -102,13 +103,28 @@ nav {
 }
 
 .aside-header {
-  margin-bottom: 24px;
+  margin-bottom: 20px;
   padding: 0 10px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   width: 100%;
+}
+
+.aside-header-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.mobile-sidebar-logo {
+  max-height: 25px;
+}
+
+.mobile-sidebar-heading {
+  font-size: 32px;
+  font-weight: 800;
 }
 
 .x-btn {
@@ -143,7 +159,7 @@ nav {
 .sidebar ul {
   list-style: none;
   padding: 0;
-  margin-bottom: 12px;
+  margin-bottom: 20px;
   text-align: left;
   width: 100%;
 }
@@ -209,7 +225,13 @@ main {
 
 .note-remove {
   max-height: 20px;
+  border-radius: 6px;
   cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.note-remove:hover {
+  background-color: #efefef;
 }
 
 .note-statuses {
