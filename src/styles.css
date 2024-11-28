@@ -1,3 +1,161 @@
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+background-color: #cacaca;
+border-radius: 10px;
+border: 3px solid #ffffff;
+}
+
+*, *::before, *::after {
+box-sizing: border-box;
+}
+
+* {
+margin: 0;
+}
+
 body {
-  background-color: black;
+line-height: 1.5;
+-webkit-font-smoothing: antialiased;
+font-family: "Inter", sans-serif;
+background-color: #ffffff;
+}
+
+img, picture, video, canvas, svg {
+display: block;
+max-width: 100%;
+}
+
+input, button, textarea, select {
+font: inherit;
+}
+
+p, h1, h2, h3, h4, h5, h6 {
+overflow-wrap: break-word;
+}
+
+p {
+text-wrap: pretty;
+}
+h1, h2, h3, h4, h5, h6 {
+text-wrap: balance;
+}
+
+#root, #__next {
+isolation: isolate;
+}
+
+/* CSS reset above */
+
+body {
+  position: relative;
+  min-height: 100vh;
+  padding-bottom: 40px;
+}
+
+a {
+  text-decoration: none;
+}
+
+nav {
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #cacaca;
+}
+
+.hamburger-menu {
+  max-height: 28px;
+  stroke-width: 1.7;
+}
+
+.profile-container {
+  height: 2rem;
+  aspect-ratio: 1 / 1;
+  background-image: url('images/pfp.jpg');
+  background-size: cover;
+  border-radius: 6px;
+}
+
+main {
+  padding: 20px;
+}
+
+.notes-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-gap: 20px;
+}
+
+.note {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+  border: 1px solid #cacaca;
+  border-radius: 8px;
+}
+
+.note-header-container {
+  margin-bottom: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.note-heading {
+  font-size: 20px;
+  margin-right: 40px;
+}
+
+.note-statuses {
+  margin: 6px 0px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-weight: 500;
+}
+
+.note-statuses span {
+  padding: 3px 10px;
+  border-radius: 8px;
+}
+
+.note-project-classification {
+  background-color: #a9b4f5;
+}
+
+.note-priority-level {
+  background-color: #f9bf74;
+}
+
+.note-due-date {
+  background-color: #f59b9b;
+}
+
+footer {
+  padding: 8px 20px 16px 20px;
+  font-size: 14px;
+  text-align: center;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+
+.author {
+  margin-left: 4px;
+  padding: 4px 10px;
+  font-weight: 500;
+  color: #ffffff;
+  background-color: #000000;
+  border-radius: 8px;
 }
