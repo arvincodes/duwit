@@ -104,7 +104,7 @@ main {
 }
 
 .note-header-container {
-  margin-bottom: 8px;
+  margin-bottom: 6px;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -113,11 +113,15 @@ main {
 
 .note-heading {
   font-size: 20px;
-  margin-right: 40px;
+  margin-right: 0px;
+}
+
+.note-remove {
+  max-height: 20px;
 }
 
 .note-statuses {
-  margin: 6px 0px;
+  margin: 0 0 12px 0;
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
@@ -158,4 +162,16 @@ footer {
   color: #ffffff;
   background-color: #000000;
   border-radius: 8px;
+}
+
+@media (min-width: 460px) {
+  .notes-container {
+    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  }
+}
+
+@media (min-width: 740px) {
+  .notes-container {
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  }
 }
