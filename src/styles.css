@@ -272,6 +272,31 @@ nav {
   border-width: 100%;
 }
 
+.sidebar-desktop-projects-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sidebar-mobile-projects-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.add-project, 
+.add-project-mobile {
+  max-height: 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.add-project:hover, 
+.add-project-mobile:hover {
+  background-color: #efefef;
+}
 
 
 
