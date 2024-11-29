@@ -14,45 +14,41 @@ const addMobileProjectBtn = document.querySelector('.sidebar-mobile-projects-hea
 const addProjectDialog = document.querySelector('.add-project-dialog')
 const addProjectForm = document.getElementById('add-project-form')
 
+const ulProjects = document.querySelector('.sidebar .ul-projects');
+
 function toggleSidebar() {
   sidebar.classList.toggle('active')
   overlay.classList.toggle('active')
 }
 
-hamburgerMenu.addEventListener('click', toggleSidebar)
-overlay.addEventListener('click', toggleSidebar)
-xBtn.addEventListener('click', toggleSidebar)
-
-addNoteBtn.addEventListener('click', () => {
+function displayAddNoteDialog() {
   const rect = addNoteBtn.getBoundingClientRect();
 
   addNoteDialog.style.left = `${rect.left - 200}px`;
   addNoteDialog.style.top = `${rect.bottom}px`;
 
   addNoteDialog.show();
-});
+}
 
-document.addEventListener('click', (event) => {
-  if (!addNoteDialog.contains(event.target) && !addNoteBtn.contains(event.target)) {
-    addNoteDialog.close();
-  }
-  if (!addProjectDialog.contains(event.target) && !addProjectBtn.contains(event.target)) {
-    addProjectDialog.close();
-  }
-});
-
-addProjectBtn.addEventListener('click', () => {
+function displayAddProjectDialog() {
   const rect = addProjectBtn.getBoundingClientRect();
 
   addProjectDialog.style.left = `${rect.left + 0}px`;
   addProjectDialog.style.top = `${rect.bottom}px`;
 
   addProjectDialog.show();
-});
+}
 
-const ulProjects = document.querySelector('.sidebar .ul-projects');
+function exitDialog() {
+  if (!addNoteDialog.contains(event.target) && !addNoteBtn.contains(event.target)) {
+    addNoteDialog.close();
+  }
+  if (!addProjectDialog.contains(event.target) && !addProjectBtn.contains(event.target)) {
+    addProjectDialog.close();
+  }
+}
 
-addMobileProjectBtn.addEventListener('click', () => {
+function appendProjectInputMobile() {
   const existingInput = document.querySelector('.add-project-input');
   if (!existingInput) {
     const input = document.createElement('input');
@@ -80,4 +76,18 @@ addMobileProjectBtn.addEventListener('click', () => {
       input.remove();
     });
   }
+}
+
+hamburgerMenu.addEventListener('click', toggleSidebar)
+overlay.addEventListener('click', toggleSidebar)
+xBtn.addEventListener('click', toggleSidebar)
+
+addNoteBtn.addEventListener('click', displayAddNoteDialog);
+
+document.addEventListener('click', (event) => {
+  exitDialog();
 });
+
+addProjectBtn.addEventListener('click', displayAddProjectDialog);
+
+addMobileProjectBtn.addEventListener('click', appendProjectInputMobile);
