@@ -41,7 +41,11 @@
         </div>
         <div class="project-classification-container">
           <label for="project-classification">Project Classification</label>
-          <select name="project-classification" id="project-classification"></select>  
+          <select name="project-classification" id="project-classification">
+            <option name="">Project 1</option>
+            <option name="">Project 2</option>
+            <option name="">Project 3</option>
+          </select>  
         </div>
         <div class="due-date-container">
           <label for="due-date">Due Date</label>
@@ -54,6 +58,10 @@
             <option value="medium">Medium</option>
             <option value="low">Low</option>
           </select>
+        </div>
+        <div class="btns-container">
+          <button class="add-btn">Add</button>
+          <button class="add-btn">Cancel</button>
         </div>
       </form>
     </dialog>
@@ -80,6 +88,19 @@
         <li><a href="#about" id="about-side">Project 3</a></li>
       </ul>
     </aside>
+    <dialog class="add-project-dialog">
+      <form id="add-project-form">
+        <h3>Add Project</h3>
+        <div class="project-name-container">
+          <label for="project-name">New Project Name</label>
+          <input type="text" id="project-name" name="project-name">
+        </div>
+        <div class="btns-container">
+          <button class="add-btn">Add</button>
+          <button class="cancel-btn">Cancel</button>
+        </div>
+      </form>
+    </dialog>
     <section>
       <div class="notes-container">
         <div class="note">
