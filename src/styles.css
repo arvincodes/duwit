@@ -188,7 +188,7 @@ nav {
 
 .aside-header {
   margin-bottom: 20px;
-  padding: 0 10px;
+  padding: 0 0 0 10px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -215,7 +215,17 @@ nav {
   padding: 0;
   background-color: #ffffff;
   border: none;
+  border-radius: 6px;
   cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.x-btn:hover {
+  background-color: #efefef;
+}
+
+.x-icon {
+  max-height: 20px;
 }
 
 .overlay {
@@ -283,6 +293,14 @@ nav {
   justify-content: space-between;
   align-items: center;
   width: 100%;
+}
+
+.add-project-btn {
+  height: 20px;
+  width: 20px;
+  padding: 0;
+  background-color: #ffffff;
+  border: none;
 }
 
 .add-project, 
