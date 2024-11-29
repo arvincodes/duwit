@@ -21,7 +21,7 @@ xBtn.addEventListener('click', toggleSidebar)
 addNoteBtn.addEventListener('click', () => {
   const rect = addNoteBtn.getBoundingClientRect();
 
-  addNoteDialog.style.left = `${rect.left - 230}px`;
+  addNoteDialog.style.left = `${rect.left - 200}px`;
   addNoteDialog.style.top = `${rect.bottom}px`;
 
   addNoteDialog.show();

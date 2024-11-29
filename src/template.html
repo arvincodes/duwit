@@ -30,7 +30,31 @@
     </nav>
     <dialog class="add-note-dialog">
       <form id="add-note-form">
-        <h2>Add Note</h2>
+        <h3>Add Note</h3>
+        <div class="title-container">
+          <label for="title">Title</label>
+          <input type="text" id="title" name="title">
+        </div>
+        <div class="description-container">
+          <label for="description">Description</label>
+          <textarea id="description" name="description"></textarea>
+        </div>
+        <div class="project-classification-container">
+          <label for="project-classification">Project Classification</label>
+          <select name="project-classification" id="project-classification"></select>  
+        </div>
+        <div class="due-date-container">
+          <label for="due-date">Due Date</label>
+          <input type="date" id="due-date" name="due-date">
+        </div>
+        <div class="priority-container">
+          <label>Priority</label>
+          <select name="priority" id="priority">
+            <option value="high">High</option>
+            <option value="medium">Medium</option>
+            <option value="low">Low</option>
+          </select>
+        </div>
       </form>
     </dialog>
   </header>
