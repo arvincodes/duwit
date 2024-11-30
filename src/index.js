@@ -113,11 +113,20 @@ function getNoteDetails() {
     </div>
     <div class="note-statuses">
       <span class="note-project-classification">${noteProjectClassification.value}</span>
-      <span class="note-priority-level">${notePriority.value}</span>
       <span class="note-due-date">${noteDueDate.value}</span>
+      <span class="note-priority-level">${notePriority.value}</span>
     </div>
     <p class="note-description">${noteDescription.value}</p>
   `
+
+  const priorityColors = {
+    High: "#e79fa2",
+    Medium: "#fcb268",
+    Low: "#ffd95f",
+  };
+  const prioritySpan = newNote.querySelector(".note-priority-level");
+  const priorityColor = priorityColors[notePriority.value] || "#FFFFFF";
+  prioritySpan.style.backgroundColor = priorityColor;
 
   const notesContainer = document.querySelector('.notes-container')
   if (notesContainer) {
@@ -184,56 +193,56 @@ function addPreloadedNotes() {
       projectClassification: "To-do Website"
     },
     {
-      title: "Design Mobile-Friendly Layout",
+      title: "Mobile-Friendly Layout",
       description: "Optimize the layout for smaller screens, ensuring easy navigation and readability. Prioritize essential features and adjust the design to fit different mobile devices.",
       priority: "High",
       dueDate: "2024-12-15",
       projectClassification: "Restaurant Website"
     },
     {
-      title: "Implement User Authentication",
+      title: "User Authentication",
       description: "Develop robust user authentication and authorization mechanisms. Include features like secure password hashing and role-based access control.",
       priority: "High",
       dueDate: "2024-12-20",
       projectClassification: "To-do Website"
     },
     {
-      title: "Optimize Database Queries",
+      title: "Optimize DB Queries",
       description: "Identify and optimize slow-running database queries. Consider techniques like indexing, query optimization, and caching to reduce server load.",
       priority: "Medium",
       dueDate: "2024-12-10",
       projectClassification: "To-do Website"
     },
     {
-      title: "Create Engaging Homepage Content",
+      title: "Homepage Content",
       description: "Write compelling copy and visually appealing content for the homepage. Highlight key features, benefits, and unique selling points to attract and engage visitors.",
       priority: "Low",
       dueDate: "2024-12-05",
       projectClassification: "Restaurant Website"
     },
     {
-      title: "Test Browser Compatibility",
+      title: "Browser Compatibility",
       description: "Thoroughly test the website's functionality and appearance across different browsers and devices. Identify and fix any compatibility issues.",
       priority: "Medium",
       dueDate: "2024-12-12",
       projectClassification: "Restaurant Website"
     },
     {
-      title: "Implement Dark Mode",
+      title: "Add Dark Mode",
       description: "Develop a dark theme option that reduces eye strain and improves readability in low-light conditions. Consider user preferences.",
       priority: "Low",
       dueDate: "2024-12-18",
       projectClassification: "To-do Website"
     },
     {
-      title: "Add Push Notifications",
+      title: "Push Notifications",
       description: "Implement a reliable push notification system to deliver timely alerts and reminders to users. Consider factors like device compatibility and user preferences.",
       priority: "High",
       dueDate: "2024-12-22",
       projectClassification: "To-do Website"
     },
     {
-      title: "Optimize Image Loading Speed",
+      title: "Image Loading Speed",
       description: "Optimize images for web delivery by compressing them without compromising quality. Implement lazy loading and responsive images to improve page load times.",
       priority: "Medium",
       dueDate: "2024-12-08",
@@ -245,6 +254,13 @@ function addPreloadedNotes() {
     const noteElement = document.createElement("div");
     noteElement.classList.add("note");
 
+    const priorityColors = {
+      High: "#e79fa2",
+      Medium: "#fcb268",
+      Low: "#ffd95f",
+    };
+    const priorityColor = priorityColors[note.priority] || "#FFFFFF";
+
     noteElement.innerHTML = `
     <div class="note-header-container">
       <h3 class="note-heading">${note.title}</h3>
@@ -254,11 +270,13 @@ function addPreloadedNotes() {
     </div>
     <div class="note-statuses">
       <span class="note-project-classification">${note.projectClassification}</span>
-      <span class="note-priority-level">${note.priority}</span>
       <span class="note-due-date">${note.dueDate}</span>
+      <span class="note-priority-level">${note.priority}</span>
     </div>
     <p class="note-description">${note.description}</p>
   `
+    const prioritySpan = noteElement.querySelector(".note-priority-level");
+    prioritySpan.style.backgroundColor = priorityColor;
 
     notesContainer.appendChild(noteElement);
   });

@@ -464,7 +464,7 @@ section {
 }
 
 .note-heading {
-  font-size: 20px;
+  font-size: 18px;
   margin-right: 0px;
 }
 
@@ -494,15 +494,11 @@ section {
 }
 
 .note-project-classification {
-  background-color: #a9b4f5;
-}
-
-.note-priority-level {
-  background-color: #f9bf74;
+  background-color: #c1caff;
 }
 
 .note-due-date {
-  background-color: #f59b9b;
+  background-color: #e0bffc;
 }
 
 .author {
