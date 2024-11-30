@@ -89,7 +89,7 @@ function updateProjectClassificationOptions() {
 
   ulProjectsDesktop.querySelectorAll('li').forEach((anchor) => {
     const option = document.createElement('option');
-    option.value = anchor.id; 
+    option.value = anchor.textContent; 
     option.textContent = anchor.textContent;
 
     projectDropdown.appendChild(option);
@@ -143,6 +143,21 @@ function getNewProject() {
   projectList.appendChild(newProject)
 }
 
+function seeNotesByPriority() {
+  const notesContainer = document.querySelector(".notes-container");
+  const notes = Array.from(notesContainer.querySelectorAll(".note"));
+
+  const priorityOrder = { High: 1, Medium: 2, Low: 3 };
+
+  notes.sort((a, b) => {
+    const priorityA = a.querySelector(".note-priority-level").textContent.trim();
+    const priorityB = b.querySelector(".note-priority-level").textContent.trim();
+    return priorityOrder[priorityA] - priorityOrder[priorityB];
+  });
+
+  notes.forEach(note => notesContainer.appendChild(note));
+}
+
 hamburgerMenu.addEventListener('click', toggleSidebar)
 overlay.addEventListener('click', toggleSidebar)
 xBtn.addEventListener('click', toggleSidebar)
@@ -166,3 +181,11 @@ addProjectToProjectListBtn.addEventListener('click', (event) => {
 })
 
 updateProjectClassificationOptions()
+
+document.getElementById("priority-side").addEventListener("click", () => {
+  seeNotesByPriority()
+});
+
+document.getElementById("priority-side-mobile").addEventListener("click", () => {
+  seeNotesByPriority()
+});
