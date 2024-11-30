@@ -119,11 +119,6 @@ function getNoteDetails() {
     <p class="note-description">${noteDescription.value}</p>
   `
 
-  const removeButton = newNote.querySelector('.note-remove')
-  removeButton.addEventListener('click', () => {
-    newNote.remove()
-  })
-
   const notesContainer = document.querySelector('.notes-container')
   if (notesContainer) {
     notesContainer.appendChild(newNote);
@@ -158,6 +153,129 @@ function seeNotesByPriority() {
   notes.forEach(note => notesContainer.appendChild(note));
 }
 
+function seeNotesByDueDate() {
+  const notesContainer = document.querySelector(".notes-container");
+  const notes = Array.from(notesContainer.querySelectorAll(".note"));
+
+  notes.sort((a, b) => {
+    const dueDateA = new Date(a.querySelector(".note-due-date").textContent.trim());
+    const dueDateB = new Date(b.querySelector(".note-due-date").textContent.trim());
+    return dueDateA - dueDateB;
+  });
+
+  notes.forEach(note => notesContainer.appendChild(note));
+}
+
+function addPreloadedNotes() {
+  const notesContainer = document.querySelector(".notes-container");
+  const preloadedNotes = [
+    {
+      title: "Add Sidebar",
+      description: "Design and implement a functional sidebar that provides quick access to important features like project navigation, note creation, and settings.",
+      priority: "High",
+      dueDate: "2024-11-26",
+      projectClassification: "Restaurant Website"
+    },
+    {
+      title: "Remove Note Feature",
+      description: "Develop a user-friendly way to delete notes. Consider adding a confirmation dialog to prevent accidental removal.",
+      priority: "Medium",
+      dueDate: "2024-11-28",
+      projectClassification: "To-do Website"
+    },
+    {
+      title: "Design Mobile-Friendly Layout",
+      description: "Optimize the layout for smaller screens, ensuring easy navigation and readability. Prioritize essential features and adjust the design to fit different mobile devices.",
+      priority: "High",
+      dueDate: "2024-12-15",
+      projectClassification: "Restaurant Website"
+    },
+    {
+      title: "Implement User Authentication",
+      description: "Develop robust user authentication and authorization mechanisms. Include features like secure password hashing and role-based access control.",
+      priority: "High",
+      dueDate: "2024-12-20",
+      projectClassification: "To-do Website"
+    },
+    {
+      title: "Optimize Database Queries",
+      description: "Identify and optimize slow-running database queries. Consider techniques like indexing, query optimization, and caching to reduce server load.",
+      priority: "Medium",
+      dueDate: "2024-12-10",
+      projectClassification: "To-do Website"
+    },
+    {
+      title: "Create Engaging Homepage Content",
+      description: "Write compelling copy and visually appealing content for the homepage. Highlight key features, benefits, and unique selling points to attract and engage visitors.",
+      priority: "Low",
+      dueDate: "2024-12-05",
+      projectClassification: "Restaurant Website"
+    },
+    {
+      title: "Test Browser Compatibility",
+      description: "Thoroughly test the website's functionality and appearance across different browsers and devices. Identify and fix any compatibility issues.",
+      priority: "Medium",
+      dueDate: "2024-12-12",
+      projectClassification: "Restaurant Website"
+    },
+    {
+      title: "Implement Dark Mode",
+      description: "Develop a dark theme option that reduces eye strain and improves readability in low-light conditions. Consider user preferences.",
+      priority: "Low",
+      dueDate: "2024-12-18",
+      projectClassification: "To-do Website"
+    },
+    {
+      title: "Add Push Notifications",
+      description: "Implement a reliable push notification system to deliver timely alerts and reminders to users. Consider factors like device compatibility and user preferences.",
+      priority: "High",
+      dueDate: "2024-12-22",
+      projectClassification: "To-do Website"
+    },
+    {
+      title: "Optimize Image Loading Speed",
+      description: "Optimize images for web delivery by compressing them without compromising quality. Implement lazy loading and responsive images to improve page load times.",
+      priority: "Medium",
+      dueDate: "2024-12-08",
+      projectClassification: "Restaurant Website"
+    }
+  ];
+
+  preloadedNotes.forEach(note => {
+    const noteElement = document.createElement("div");
+    noteElement.classList.add("note");
+
+    noteElement.innerHTML = `
+    <div class="note-header-container">
+      <h3 class="note-heading">${note.title}</h3>
+      <svg class="note-remove" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+      </svg>         
+    </div>
+    <div class="note-statuses">
+      <span class="note-project-classification">${note.projectClassification}</span>
+      <span class="note-priority-level">${note.priority}</span>
+      <span class="note-due-date">${note.dueDate}</span>
+    </div>
+    <p class="note-description">${note.description}</p>
+  `
+
+    notesContainer.appendChild(noteElement);
+  });
+}
+
+function removeNote() {
+  const notesContainer = document.querySelector(".notes-container");
+  notesContainer.addEventListener("click", (event) => {
+    if (event.target.classList.contains("note-remove")) {
+      const noteElement = event.target.closest(".note");
+      if (noteElement) {
+        noteElement.remove();
+      }
+    }
+  });
+}
+
 hamburgerMenu.addEventListener('click', toggleSidebar)
 overlay.addEventListener('click', toggleSidebar)
 xBtn.addEventListener('click', toggleSidebar)
@@ -189,3 +307,17 @@ document.getElementById("priority-side").addEventListener("click", () => {
 document.getElementById("priority-side-mobile").addEventListener("click", () => {
   seeNotesByPriority()
 });
+
+document.getElementById("due-date-side").addEventListener("click", () => {
+  seeNotesByDueDate()
+});
+
+document.getElementById("due-date-side-mobile").addEventListener("click", () => {
+  seeNotesByDueDate()
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  addPreloadedNotes()
+  removeNote()
+});
+
