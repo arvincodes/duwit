@@ -17,6 +17,8 @@ const addProjectForm = document.getElementById('add-project-form')
 const ulProjects = document.querySelector('.sidebar .ul-projects');
 
 const addNoteToNotesBtn = document.querySelector('#add-note-form .add-btn')
+const removeNoteBtn = document.querySelector('.note-remove')
+
 
 function toggleSidebar() {
   sidebar.classList.toggle('active')
@@ -103,6 +105,11 @@ function getNoteDetails() {
     </div>
     <p class="note-description">${noteDescription.value}</p>
   `
+
+  const removeButton = newNote.querySelector('.note-remove')
+  removeButton.addEventListener('click', () => {
+    newNote.remove()
+  })
 
   const notesContainer = document.querySelector('.notes-container')
   if (notesContainer) {
