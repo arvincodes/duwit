@@ -14,11 +14,12 @@ const addMobileProjectBtn = document.querySelector('.sidebar-mobile-projects-hea
 const addProjectDialog = document.querySelector('.add-project-dialog')
 const addProjectForm = document.getElementById('add-project-form')
 
-const ulProjects = document.querySelector('.sidebar .ul-projects');
+const ulProjectsDesktop = document.querySelector('.sidebar-desktop .ul-projects');
+const ulProjectsMobile = document.querySelector('.sidebar .ul-projects');
 
 const addNoteToNotesBtn = document.querySelector('#add-note-form .add-btn')
 const removeNoteBtn = document.querySelector('.note-remove')
-
+const addProjectToProjectListBtn = document.querySelector('#add-project-form .btns-container .add-btn')
 
 function toggleSidebar() {
   sidebar.classList.toggle('active')
@@ -60,7 +61,7 @@ function appendProjectInputMobile() {
     input.className = 'add-project-input'; 
     input.placeholder = 'Enter project name...';
     
-    ulProjects.appendChild(input);
+    ulProjectsMobile.appendChild(input);
     input.focus();
 
     input.addEventListener('keypress', (event) => {
@@ -71,7 +72,7 @@ function appendProjectInputMobile() {
         newAnchor.textContent = input.value;
 
         newListItem.appendChild(newAnchor);
-        ulProjects.appendChild(newListItem);
+        ulProjectsMobile.appendChild(newListItem);
         input.remove();
       }
     });
@@ -81,6 +82,18 @@ function appendProjectInputMobile() {
     });
   }
 }
+
+function updateProjectClassificationOptions() {
+  const projectDropdown = document.getElementById('project-classification');
+  projectDropdown.innerHTML = ''
+
+  ulProjectsDesktop.querySelectorAll('li').forEach((anchor) => {
+    const option = document.createElement('option');
+    option.value = anchor.id; 
+    option.textContent = anchor.textContent;
+
+    projectDropdown.appendChild(option);
+})}
 
 function getNoteDetails() {
   const noteTitle = document.getElementById('title');
@@ -119,6 +132,17 @@ function getNoteDetails() {
   }
 }
 
+function getNewProject() {
+  const projectName = document.getElementById('project-name')
+
+  const newProject = document.createElement('li')
+  newProject.classList.add(`${newProject.value}`)
+  newProject.innerHTML = projectName.value
+
+  const projectList = document.querySelector('.ul-projects')
+  projectList.appendChild(newProject)
+}
+
 hamburgerMenu.addEventListener('click', toggleSidebar)
 overlay.addEventListener('click', toggleSidebar)
 xBtn.addEventListener('click', toggleSidebar)
@@ -130,10 +154,15 @@ addNoteToNotesBtn.addEventListener('click', (event) => {
 });
 
 document.addEventListener('click', (event) => {
-  event.preventDefault();
   exitDialog();
 });
 
 addProjectBtn.addEventListener('click', displayAddProjectDialog);
-
 addMobileProjectBtn.addEventListener('click', appendProjectInputMobile);
+
+addProjectToProjectListBtn.addEventListener('click', (event) => {
+  event.preventDefault()
+  getNewProject()
+})
+
+updateProjectClassificationOptions()

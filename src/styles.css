@@ -366,12 +366,12 @@ nav {
   border-radius: 8px;
   transition: font-weight 0.3s, background-color 0.3s;
   cursor: pointer;
+  font-size: 14px;
 }
 
 .sidebar ul li a, .sidebar-desktop ul li a {
   color: #000000;
   text-decoration: none;
-  font-size: 14px;
 }
 
 .sidebar ul li:hover, .sidebar-desktop ul li:hover {
