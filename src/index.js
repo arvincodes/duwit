@@ -16,6 +16,8 @@ const addProjectForm = document.getElementById('add-project-form')
 
 const ulProjects = document.querySelector('.sidebar .ul-projects');
 
+const addNoteToNotesBtn = document.querySelector('#add-note-form .add-btn')
+
 function toggleSidebar() {
   sidebar.classList.toggle('active')
   overlay.classList.toggle('active')
@@ -78,13 +80,50 @@ function appendProjectInputMobile() {
   }
 }
 
+function getNoteDetails() {
+  const noteTitle = document.getElementById('title');
+  const noteDescription = document.getElementById('description');
+  const noteProjectClassification = document.getElementById('project-classification');
+  const noteDueDate = document.getElementById('due-date');
+  const notePriority = document.getElementById('priority');
+
+  const newNote = document.createElement('div')
+  newNote.classList.add('note')
+  newNote.innerHTML = `
+    <div class="note-header-container">
+      <h3 class="note-heading">${noteTitle.value}</h3>
+      <svg class="note-remove" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+      </svg>         
+    </div>
+    <div class="note-statuses">
+      <span class="note-project-classification">${noteProjectClassification.value}</span>
+      <span class="note-priority-level">${notePriority.value}</span>
+      <span class="note-due-date">${noteDueDate.value}</span>
+    </div>
+    <p class="note-description">${noteDescription.value}</p>
+  `
+
+  const notesContainer = document.querySelector('.notes-container')
+  if (notesContainer) {
+    notesContainer.appendChild(newNote);
+  } else {
+    console.error('Notes container not found.');
+  }
+}
+
 hamburgerMenu.addEventListener('click', toggleSidebar)
 overlay.addEventListener('click', toggleSidebar)
 xBtn.addEventListener('click', toggleSidebar)
 
 addNoteBtn.addEventListener('click', displayAddNoteDialog);
+addNoteToNotesBtn.addEventListener('click', (event) => {
+  event.preventDefault();
+  getNoteDetails();
+});
 
 document.addEventListener('click', (event) => {
+  event.preventDefault();
   exitDialog();
 });
 
