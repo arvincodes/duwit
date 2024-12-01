@@ -510,6 +510,10 @@ section {
   border-radius: 8px;
 }
 
+.note.hidden {
+  display: none;
+}
+
 @media (min-width: 460px) {
   .notes-container {
     grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));

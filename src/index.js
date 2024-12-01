@@ -147,7 +147,16 @@ function getNewProject() {
   projectList.appendChild(newProject)
 }
 
+function resetNoteVisibility() {
+  const notes = document.querySelectorAll(".note");
+  notes.forEach(note => {
+    note.classList.remove("hidden") // Reset visibility to default
+  });
+}
+
 function seeNotesByPriority() {
+  resetNoteVisibility(); // Ensure all notes are visible
+
   const notesContainer = document.querySelector(".notes-container");
   const notes = Array.from(notesContainer.querySelectorAll(".note"));
 
@@ -160,9 +169,12 @@ function seeNotesByPriority() {
   });
 
   notes.forEach(note => notesContainer.appendChild(note));
+
 }
 
 function seeNotesByDueDate() {
+  resetNoteVisibility(); // Ensure all notes are visible
+
   const notesContainer = document.querySelector(".notes-container");
   const notes = Array.from(notesContainer.querySelectorAll(".note"));
 
@@ -294,6 +306,20 @@ function removeNote() {
   });
 }
 
+function filterNotesByProject(projectName) {
+  const notes = document.querySelectorAll(".note");
+
+  notes.forEach(note => {
+    const projectClassification = note.querySelector(".note-project-classification").textContent.trim();
+    if (projectClassification === projectName) {
+      note.classList.remove("hidden"); // Remove a hidden class
+    } else {
+      note.classList.add("hidden"); // Add a hidden class
+    }
+  });
+}
+
+
 hamburgerMenu.addEventListener('click', toggleSidebar)
 overlay.addEventListener('click', toggleSidebar)
 xBtn.addEventListener('click', toggleSidebar)
@@ -318,6 +344,22 @@ addProjectToProjectListBtn.addEventListener('click', (event) => {
 
 updateProjectClassificationOptions()
 
+document.addEventListener("DOMContentLoaded", () => {
+  addPreloadedNotes()
+  removeNote()
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  // Attach event listener to the project list items
+  const projectListItems = document.querySelectorAll(".ul-projects li");
+  projectListItems.forEach(item => {
+    item.addEventListener("click", () => {
+      const selectedProject = item.textContent.trim();
+      filterNotesByProject(selectedProject);
+    });
+  });
+});
+
 document.getElementById("priority-side").addEventListener("click", () => {
   seeNotesByPriority()
 });
@@ -332,10 +374,5 @@ document.getElementById("due-date-side").addEventListener("click", () => {
 
 document.getElementById("due-date-side-mobile").addEventListener("click", () => {
   seeNotesByDueDate()
-});
-
-document.addEventListener("DOMContentLoaded", () => {
-  addPreloadedNotes()
-  removeNote()
 });
 
