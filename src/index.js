@@ -69,6 +69,9 @@ function appendProjectInputMobile() {
         const newListItem = document.createElement('li');
         newListItem.textContent = input.value;
         ulProjectsMobile.appendChild(newListItem);
+
+        const desktopListItem = newListItem.cloneNode(true);
+        ulProjectsDesktop.appendChild(desktopListItem);
         input.remove();
 
         updateProjectClassificationOptionsMobile()
@@ -362,6 +365,7 @@ addMobileProjectBtn.addEventListener('click', appendProjectInputMobile);
 addProjectToProjectListBtn.addEventListener('click', (event) => {
   event.preventDefault()
   getNewProject()
+  getNewProjectMobile()
   updateProjectClassificationOptions()
 })
 
