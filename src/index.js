@@ -61,6 +61,8 @@ function appendProjectInputMobile() {
     ulProjectsMobile.appendChild(input);
     input.focus();
 
+    let inputHandled = false;
+
     input.addEventListener('keypress', (event) => {
       if (event.key === 'Enter' && input.value.trim() !== '') {
         const newListItem = document.createElement('li');
@@ -69,15 +71,19 @@ function appendProjectInputMobile() {
 
         const desktopListItem = newListItem.cloneNode(true);
         ulProjectsDesktop.appendChild(desktopListItem);
+
+        inputHandled = true;
         input.remove();
 
-        updateProjectClassificationOptionsMobile()
-        saveProjectsToLocalStorage()
+        updateProjectClassificationOptionsMobile();
+        saveProjectsToLocalStorage();
       }
     });
 
     input.addEventListener('blur', () => {
-      input.remove();
+      if (!inputHandled) {
+        input.remove();
+      }
     });
   }
 }
@@ -212,114 +218,6 @@ function seeNotesByDueDate() {
   notes.forEach(note => notesContainer.appendChild(note));
 }
 
-// function addPreloadedNotes() {
-//   const notesContainer = document.querySelector(".notes-container");
-//   const preloadedNotes = [
-//     {
-//       title: "Add Sidebar",
-//       description: "Design and implement a functional sidebar that provides quick access to important features like project navigation, note creation, and settings.",
-//       priority: "High",
-//       dueDate: "2024-11-26",
-//       projectClassification: "Restaurant Website"
-//     },
-//     {
-//       title: "Remove Note Feature",
-//       description: "Develop a user-friendly way to delete notes. Consider adding a confirmation dialog to prevent accidental removal.",
-//       priority: "Medium",
-//       dueDate: "2024-11-28",
-//       projectClassification: "To-do Website"
-//     },
-//     {
-//       title: "Mobile-Friendly Layout",
-//       description: "Optimize the layout for smaller screens, ensuring easy navigation and readability. Prioritize essential features and adjust the design to fit different mobile devices.",
-//       priority: "High",
-//       dueDate: "2024-12-15",
-//       projectClassification: "Restaurant Website"
-//     },
-//     {
-//       title: "User Authentication",
-//       description: "Develop robust user authentication and authorization mechanisms. Include features like secure password hashing and role-based access control.",
-//       priority: "High",
-//       dueDate: "2024-12-20",
-//       projectClassification: "To-do Website"
-//     },
-//     {
-//       title: "Optimize DB Queries",
-//       description: "Identify and optimize slow-running database queries. Consider techniques like indexing, query optimization, and caching to reduce server load.",
-//       priority: "Medium",
-//       dueDate: "2024-12-10",
-//       projectClassification: "To-do Website"
-//     },
-//     {
-//       title: "Homepage Content",
-//       description: "Write compelling copy and visually appealing content for the homepage. Highlight key features, benefits, and unique selling points to attract and engage visitors.",
-//       priority: "Low",
-//       dueDate: "2024-12-05",
-//       projectClassification: "Restaurant Website"
-//     },
-//     {
-//       title: "Browser Compatibility",
-//       description: "Thoroughly test the website's functionality and appearance across different browsers and devices. Identify and fix any compatibility issues.",
-//       priority: "Medium",
-//       dueDate: "2024-12-12",
-//       projectClassification: "Restaurant Website"
-//     },
-//     {
-//       title: "Add Dark Mode",
-//       description: "Develop a dark theme option that reduces eye strain and improves readability in low-light conditions. Consider user preferences.",
-//       priority: "Low",
-//       dueDate: "2024-12-18",
-//       projectClassification: "To-do Website"
-//     },
-//     {
-//       title: "Push Notifications",
-//       description: "Implement a reliable push notification system to deliver timely alerts and reminders to users. Consider factors like device compatibility and user preferences.",
-//       priority: "High",
-//       dueDate: "2024-12-22",
-//       projectClassification: "To-do Website"
-//     },
-//     {
-//       title: "Image Loading Speed",
-//       description: "Optimize images for web delivery by compressing them without compromising quality. Implement lazy loading and responsive images to improve page load times.",
-//       priority: "Medium",
-//       dueDate: "2024-12-08",
-//       projectClassification: "Restaurant Website"
-//     }
-//   ];
-
-//   preloadedNotes.forEach(note => {
-//     const noteElement = document.createElement("div");
-//     noteElement.classList.add("note");
-
-//     const priorityColors = {
-//       High: "#e79fa2",
-//       Medium: "#fcb268",
-//       Low: "#ffd95f",
-//     };
-//     const priorityColor = priorityColors[note.priority] || "#FFFFFF";
-
-//     noteElement.innerHTML = `
-//     <div class="note-header-container">
-//       <h3 class="note-heading">${note.title}</h3>
-//       <svg class="note-remove" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-//         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
-//       </svg>         
-//     </div>
-//     <div class="note-statuses">
-//       <span class="note-project-classification">${note.projectClassification}</span>
-//       <span class="note-due-date">${note.dueDate}</span>
-//       <span class="note-priority-level">${note.priority}</span>
-//     </div>
-//     <p class="note-description">${note.description}</p>
-//   `
-//     const prioritySpan = noteElement.querySelector(".note-priority-level");
-//     prioritySpan.style.backgroundColor = priorityColor;
-
-//     notesContainer.appendChild(noteElement);
-//   });
-
-// }
-
 function addPreloadedNotes() {
   const notesContainer = document.querySelector(".notes-container");
   const savedNotes = JSON.parse(localStorage.getItem("notes")) || [];
@@ -369,12 +267,11 @@ function addPreloadedNotes() {
     }
   ];
 
-  // Filter out preloaded notes already in local storage
   const newNotes = preloadedNotes.filter((preloaded) => {
-    return !savedNotes.some((saved) => saved.title === preloaded.title);
+    return !savedNotes.some((saved) => saved.title === preloaded.title) &&
+            !localStorage.getItem(`deleted_note_${preloaded.title}`);
   });
 
-  // Add new preloaded notes to the DOM and local storage
   newNotes.forEach((note) => {
     const noteElement = document.createElement("div");
     noteElement.classList.add("note");
@@ -405,13 +302,11 @@ function addPreloadedNotes() {
     prioritySpan.style.backgroundColor = priorityColor;
 
     notesContainer.appendChild(noteElement);
-    savedNotes.push(note); // Add preloaded note to savedNotes
+    savedNotes.push(note);
   });
 
-  // Save the updated notes list to local storage
   localStorage.setItem("notes", JSON.stringify(savedNotes));
 }
-
 
 function removeNote() {
   const notesContainer = document.querySelector(".notes-container");
@@ -419,8 +314,12 @@ function removeNote() {
     if (event.target.classList.contains("note-remove")) {
       const noteElement = event.target.closest(".note");
       if (noteElement) {
+        const noteTitle = noteElement.querySelector(".note-heading").textContent;
+        
+        localStorage.setItem(`deleted_note_${noteTitle}`, 'true');
+        
         noteElement.remove();
-        saveNotesToLocalStorage()
+        saveNotesToLocalStorage();
       }
     }
   });
@@ -453,14 +352,6 @@ function saveNotesToLocalStorage() {
   localStorage.setItem("notes", JSON.stringify(notes));
 }
 
-// function saveProjectsToLocalStorage() {
-//   const projects = [];
-//   document.querySelectorAll(".ul-projects li").forEach((project) => {
-//     projects.push(project.textContent);
-//   });
-//   localStorage.setItem("projects", JSON.stringify(projects));
-// }
-
 function saveProjectsToLocalStorage() {
   const projects = [];
   const projectList = document.querySelectorAll(".ul-projects li");
@@ -469,7 +360,6 @@ function saveProjectsToLocalStorage() {
     projects.push(project.textContent);
   });
 
-  // Ensure we're only saving unique projects
   const uniqueProjects = [...new Set(projects)];
 
   localStorage.setItem("projects", JSON.stringify(uniqueProjects));
@@ -512,28 +402,13 @@ function loadNotesFromLocalStorage() {
   });
 }
 
-// function loadProjectsFromLocalStorage() {
-//   const savedProjects = JSON.parse(localStorage.getItem("projects")) || [];
-//   const projectList = document.querySelector(".ul-projects");
-//   // projectList.innerHTML = ''
-
-//   savedProjects.forEach((project) => {
-//     const projectItem = document.createElement("li");
-//     projectItem.textContent = project;
-//     projectList.appendChild(projectItem);
-//   });
-
-//   updateProjectClassificationOptions();
-// }
-
 function loadProjectsFromLocalStorage() {
+  addPreloadedNotes()
   const savedProjects = JSON.parse(localStorage.getItem("projects")) || [];
   const projectList = document.querySelector(".ul-projects");
 
-  // Retrieve all existing project items from the DOM (excluding hardcoded projects)
   const existingProjects = Array.from(projectList.children).map(item => item.textContent.trim());
 
-  // Add saved projects to the list that aren't already present
   savedProjects.forEach((project) => {
     if (!existingProjects.includes(project)) {
       const projectItem = document.createElement("li");
@@ -542,15 +417,13 @@ function loadProjectsFromLocalStorage() {
     }
   });
 
-  // Ensure hardcoded projects are in local storage, if not, add them
   const hardcodedProjects = ["Restaurant Website", "To-do Website"];
   hardcodedProjects.forEach((project) => {
     if (!savedProjects.includes(project)) {
-      savedProjects.unshift(project); // Add hardcoded projects at the beginning of the list
+      savedProjects.unshift(project);
     }
   });
 
-  // Save the updated project list (with hardcoded projects if they weren't added)
   localStorage.setItem("projects", JSON.stringify(savedProjects));
 
   updateProjectClassificationOptions();
@@ -560,10 +433,8 @@ function loadProjectsFromLocalStorageMobile() {
   const savedProjects = JSON.parse(localStorage.getItem("projects")) || [];
   const projectList = document.querySelector(".sidebar .ul-projects");
 
-  // Retrieve all existing project items from the DOM (excluding hardcoded projects)
   const existingProjects = Array.from(projectList.children).map(item => item.textContent.trim());
 
-  // Add saved projects to the list that aren't already present
   savedProjects.forEach((project) => {
     if (!existingProjects.includes(project)) {
       const projectItem = document.createElement("li");
@@ -572,21 +443,17 @@ function loadProjectsFromLocalStorageMobile() {
     }
   });
 
-  // Ensure hardcoded projects are in local storage, if not, add them
   const hardcodedProjects = ["Restaurant Website", "To-do Website"];
   hardcodedProjects.forEach((project) => {
     if (!savedProjects.includes(project)) {
-      savedProjects.unshift(project); // Add hardcoded projects at the beginning of the list
+      savedProjects.unshift(project);
     }
   });
 
-  // Save the updated project list (with hardcoded projects if they weren't added)
   localStorage.setItem("projects", JSON.stringify(savedProjects));
 
   updateProjectClassificationOptions();
 }
-
-
 
 hamburgerMenu.addEventListener('click', toggleSidebar)
 overlay.addEventListener('click', toggleSidebar)
@@ -598,7 +465,7 @@ addNoteToNotesBtn.addEventListener('click', (event) => {
   getNoteDetails();
 });
 
-document.addEventListener('click', (event) => {
+document.addEventListener('click', () => {
   exitDialog();
 });
 
@@ -614,19 +481,14 @@ addProjectToProjectListBtn.addEventListener('click', (event) => {
 
 updateProjectClassificationOptions()
 
-
-
 document.addEventListener("DOMContentLoaded", () => {
-  addPreloadedNotes()
   loadNotesFromLocalStorage()
   loadProjectsFromLocalStorage();
   loadProjectsFromLocalStorageMobile()
   removeNote();
 });
 
-
-
-document.querySelector(".ul-projects").addEventListener("click", (event) => {
+ulProjectsDesktop.addEventListener("click", (event) => {
   const clickedItem = event.target;
   if (clickedItem.tagName === "LI") {
     const selectedProject = clickedItem.textContent.trim();
@@ -634,14 +496,13 @@ document.querySelector(".ul-projects").addEventListener("click", (event) => {
   }
 });
 
-document.querySelector(".sidebar .ul-projects").addEventListener("click", (event) => {
+ulProjectsMobile.addEventListener("click", (event) => {
   const clickedItem = event.target;
   if (clickedItem.tagName === "LI") {
     const selectedProject = clickedItem.textContent.trim();
     filterNotesByProject(selectedProject);
   }
 });
-
 
 document.getElementById("priority-side").addEventListener("click", () => {
   seeNotesByPriority()
@@ -658,12 +519,4 @@ document.getElementById("due-date-side").addEventListener("click", () => {
 document.getElementById("due-date-side-mobile").addEventListener("click", () => {
   seeNotesByDueDate()
 });
-
-function clearLocalStorage() {
-  localStorage.removeItem("notes");
-  localStorage.removeItem("projects");
-  location.reload(); // Reload page to reflect changes
-}
-
-// clearLocalStorage()
 
