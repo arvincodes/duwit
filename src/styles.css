@@ -106,6 +106,11 @@ nav {
   background-image: url('images/pfp.jpg');
   background-size: cover;
   border-radius: 50px;
+  transition: opacity 0.3s;
+}
+
+.profile-container:hover {
+  opacity: 0.8;
 }
 
 .add-note-dialog {
