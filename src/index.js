@@ -67,13 +67,12 @@ function appendProjectInputMobile() {
     input.addEventListener('keypress', (event) => {
       if (event.key === 'Enter' && input.value.trim() !== '') {
         const newListItem = document.createElement('li');
-        const newAnchor = document.createElement('a');
-        newAnchor.href = "#"; 
-        newAnchor.textContent = input.value;
-
-        newListItem.appendChild(newAnchor);
+        newListItem.textContent = input.value;
         ulProjectsMobile.appendChild(newListItem);
         input.remove();
+
+        updateProjectClassificationOptionsMobile()
+
       }
     });
 
@@ -88,6 +87,18 @@ function updateProjectClassificationOptions() {
   projectDropdown.innerHTML = ''
 
   ulProjectsDesktop.querySelectorAll('li').forEach((anchor) => {
+    const option = document.createElement('option');
+    option.value = anchor.textContent; 
+    option.textContent = anchor.textContent;
+
+    projectDropdown.appendChild(option);
+})}
+
+function updateProjectClassificationOptionsMobile() {
+  const projectDropdown = document.getElementById('project-classification');
+  projectDropdown.innerHTML = ''
+
+  ulProjectsMobile.querySelectorAll('li').forEach((anchor) => {
     const option = document.createElement('option');
     option.value = anchor.textContent; 
     option.textContent = anchor.textContent;
@@ -147,15 +158,26 @@ function getNewProject() {
   projectList.appendChild(newProject)
 }
 
+function getNewProjectMobile() {
+  const projectName = document.getElementById('project-name')
+
+  const newProject = document.createElement('li')
+  newProject.classList.add(`${newProject.value}`)
+  newProject.innerHTML = projectName.value
+
+  const projectList = document.querySelector('.sidebar .ul-projects')
+  projectList.appendChild(newProject)
+}
+
 function resetNoteVisibility() {
   const notes = document.querySelectorAll(".note");
   notes.forEach(note => {
-    note.classList.remove("hidden") // Reset visibility to default
+    note.classList.remove("hidden")
   });
 }
 
 function seeNotesByPriority() {
-  resetNoteVisibility(); // Ensure all notes are visible
+  resetNoteVisibility();
 
   const notesContainer = document.querySelector(".notes-container");
   const notes = Array.from(notesContainer.querySelectorAll(".note"));
@@ -173,7 +195,7 @@ function seeNotesByPriority() {
 }
 
 function seeNotesByDueDate() {
-  resetNoteVisibility(); // Ensure all notes are visible
+  resetNoteVisibility();
 
   const notesContainer = document.querySelector(".notes-container");
   const notes = Array.from(notesContainer.querySelectorAll(".note"));
@@ -312,9 +334,9 @@ function filterNotesByProject(projectName) {
   notes.forEach(note => {
     const projectClassification = note.querySelector(".note-project-classification").textContent.trim();
     if (projectClassification === projectName) {
-      note.classList.remove("hidden"); // Remove a hidden class
+      note.classList.remove("hidden");
     } else {
-      note.classList.add("hidden"); // Add a hidden class
+      note.classList.add("hidden");
     }
   });
 }
@@ -340,9 +362,12 @@ addMobileProjectBtn.addEventListener('click', appendProjectInputMobile);
 addProjectToProjectListBtn.addEventListener('click', (event) => {
   event.preventDefault()
   getNewProject()
+  updateProjectClassificationOptions()
 })
 
 updateProjectClassificationOptions()
+
+
 
 document.addEventListener("DOMContentLoaded", () => {
   addPreloadedNotes()
@@ -350,7 +375,6 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Attach event listener to the project list items
   const projectListItems = document.querySelectorAll(".ul-projects li");
   projectListItems.forEach(item => {
     item.addEventListener("click", () => {
