@@ -374,15 +374,22 @@ document.addEventListener("DOMContentLoaded", () => {
   removeNote()
 });
 
-document.addEventListener("DOMContentLoaded", () => {
-  const projectListItems = document.querySelectorAll(".ul-projects li");
-  projectListItems.forEach(item => {
-    item.addEventListener("click", () => {
-      const selectedProject = item.textContent.trim();
-      filterNotesByProject(selectedProject);
-    });
-  });
+document.querySelector(".ul-projects").addEventListener("click", (event) => {
+  const clickedItem = event.target;
+  if (clickedItem.tagName === "LI") {
+    const selectedProject = clickedItem.textContent.trim();
+    filterNotesByProject(selectedProject);
+  }
 });
+
+document.querySelector(".sidebar .ul-projects").addEventListener("click", (event) => {
+  const clickedItem = event.target;
+  if (clickedItem.tagName === "LI") {
+    const selectedProject = clickedItem.textContent.trim();
+    filterNotesByProject(selectedProject);
+  }
+});
+
 
 document.getElementById("priority-side").addEventListener("click", () => {
   seeNotesByPriority()
